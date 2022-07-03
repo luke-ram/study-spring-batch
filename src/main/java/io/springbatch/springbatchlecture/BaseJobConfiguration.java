@@ -10,9 +10,11 @@ import org.springframework.batch.core.scope.context.ChunkContext;
 import org.springframework.batch.core.step.tasklet.Tasklet;
 import org.springframework.batch.repeat.RepeatStatus;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 
 @RequiredArgsConstructor
-public class JobParameterConfiguration {
+@Configuration
+public class BaseJobConfiguration {
 
     private final JobBuilderFactory jobBuilderFactory;
     private final StepBuilderFactory stepBuilderFactory;
@@ -38,8 +40,7 @@ public class JobParameterConfiguration {
     }
 
     @Bean
-
-    Step step2() {
+    public Step step2() {
         return stepBuilderFactory.get("step1")
                 .tasklet(new Tasklet() {
                     @Override
