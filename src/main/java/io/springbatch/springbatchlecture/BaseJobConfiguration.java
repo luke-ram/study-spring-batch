@@ -20,7 +20,8 @@ public class BaseJobConfiguration {
     private final StepBuilderFactory stepBuilderFactory;
 
     @Bean
-    public Job job(){
+
+    public Job job() {
         return jobBuilderFactory.get("job")
                 .start(step1())
                 .next(step2())
@@ -41,7 +42,19 @@ public class BaseJobConfiguration {
 
     @Bean
     public Step step2() {
-        return stepBuilderFactory.get("step1")
+        return stepBuilderFactory.get("step2")
+                .tasklet(new Tasklet() {
+                    @Override
+                    public RepeatStatus execute(StepContribution stepContribution, ChunkContext chunkContext) throws Exception {
+                        return RepeatStatus.FINISHED;
+                    }
+                }).build();
+
+    }
+
+    @Bean
+    public Step step3() {
+        return stepBuilderFactory.get("step3")
                 .tasklet(new Tasklet() {
                     @Override
                     public RepeatStatus execute(StepContribution stepContribution, ChunkContext chunkContext) throws Exception {
